@@ -3,21 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniQueue</title>
+    <title>PDF Viewer</title>
+    <script src="assets/pdfjs/pdf.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
         }
-        iframe {
-            border: none;
+        #pdf-viewer {
             width: 100%;
-            height: 80vh;
+            height: 100vh;
+            overflow: auto;
+            background: #f0f0f0;
+        }
+        canvas {
+            display: block;
+            margin: 10px auto;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
-    <p>Artykuł opisujący projekt:</p>
-    <iframe src="artykul.pdf"></iframe>
+    <div id="pdf-viewer"></div>
+    <script>
+        const pdfUrl = "artykul.pdf"; // Ścieżka do pliku PDF
+        const viewer = document.getElementById("pdf-viewer");
+
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            for (let i = 1; i <= pdf.numPages; i++) {
+                pdf.getPage(i).then(page => {
+                    const canvas = document.createElement("canvas");
+                    viewer.appendChild(canvas);
+                    const context = canvas.getContext("2d");
+                    const viewport = page.getViewport({ scale: 1.5 });
+
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    page.render({ canvasContext: context, viewport: viewport });
+                });
+            }
+        }).catch(err => {
+            viewer.innerHTML = `<p>Error loading PDF: ${err.message}</p>`;
+        });
+    </script>
 </body>
 </html>
