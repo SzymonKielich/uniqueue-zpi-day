@@ -1,32 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Viewer</title>
+    <title>UniQueue</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        h1, h2 {
             text-align: center;
         }
-        a {
-            text-decoration: none;
-            color: #007bff;
-            font-size: 18px;
-            border: 1px solid #007bff;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+        .pdf-container {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
         }
-        a:hover {
+        .download-button {
+            display: block;
+            width: 200px;
+            margin: 10px auto 30px;
+            padding: 10px 0;
+            text-align: center;
             background-color: #007bff;
             color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .download-button:hover {
+            background-color: #0056b3;
+        }
+        .media-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .media-container video, .media-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            .pdf-container {
+                height: 60vh;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>UniQueue</h1>
-    <a href="https://szymonkielich.github.io/artykul.pdf" target="_blank">Opis projektu</a>
+    <h1>Uniqueue</h1>
+    <p style="text-align: center;">Opis projektu:</p>
+    <div class="pdf-container">
+        <object data="artykul.pdf" type="application/pdf" width="100%" height="100%">
+            <p>Twój przeglądarka nie obsługuje wyświetlania plików PDF. 
+            <a href="artykul.pdf">Pobierz plik PDF</a>.</p>
+        </object>
+    </div>
+    <a href="artykul.pdf" class="download-button" download>Pobierz PDF</a>
+
 </body>
 </html>
